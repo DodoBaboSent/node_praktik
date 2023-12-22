@@ -134,3 +134,4 @@ dist
 /.idea/node_praktik.iml
 /.idea/php.xml
 /.idea/vcs.xml
+/build/
