@@ -135,3 +135,4 @@ dist
 /.idea/php.xml
 /.idea/vcs.xml
 /build/
+/prisma/migrations/
