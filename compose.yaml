@@ -11,11 +11,41 @@ services:
   server:
     build:
       context: .
+      dockerfile: Dockerfile
+      target: production
+    command: sh -c "npx prisma migrate deploy; node build/assets/src/index.js"
     environment:
-      NODE_ENV: production
+      NODE_ENV: dev
+      DATABASE_URL: mysql://root:root@mysql_db:3306/praktik
     ports:
       - 3000:3000
+    volumes:
+      - /c/raznoe/projects/node_praktik/static:/home/node/app/static
+    depends_on:
+      mysql_db:
+        condition: service_healthy
+  mysql_db:
+    image: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: praktik
+      MYSQL_USER: bujt
+      MYSQL_PASSWORD: bujt
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD' ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+      start_interval: 5s
 
+volumes:
+  db_data: {}
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the

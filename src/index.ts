@@ -9,9 +9,9 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
-const root = process.env.ROOT || './';
+const root = process.env.ROOT || './static/';
 
-app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.use(express.static(root));
 
