@@ -1,3 +1,22 @@
 *{
     background-color: beige;
 }
+
+.grid{
+    display: grid;
+}
+
+.wrapper{
+    grid-template-rows: [nav-start] 1fr [nav-end main-start] 1fr [main-end];
+    grid-template-columns: [main-start] 1fr [main-end];
+}
+
+.nav{
+    grid-column: nav;
+    grid-row: main;
+}
+
+.main{
+    grid-column: main;
+    grid-row: main;
+}

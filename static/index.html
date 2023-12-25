@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
-<form action="/reg" method="post">
-    <input type="text" name="email" id="email">
-    <input type="text" name="password" id="password">
-    <button type="submit">Reg</button>
-</form>
+<div class="grid wrapper">
+    <div class="nav" hx-get="/temp/_nav" hx-target="this" hx-trigger="load once"></div>
+    <div class="main" hx-target="this" hx-get="/temp/_main" hx-trigger="load once">
+
+    </div>
+</div>
 </body>
 </html>
