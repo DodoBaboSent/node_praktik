@@ -20,3 +20,19 @@
     grid-column: main;
     grid-row: main;
 }
+.flex{
+    display: flex;
+}
+.flex-row{
+    flex-direction: row;
+}
+.gap-2{
+    gap: 2rem;
+}
+.decoration-none{
+    list-style: none;
+}
+.link__dec-none{
+    text-decoration: none;
+    color: inherit;
+}

@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Hello World</title>
-    <script src="assets/app.js"></script>
+    <script src="assets/htmx.min.js"></script>
     <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
 <div class="grid wrapper">
-    <div class="nav" hx-get="/temp/_nav" hx-target="this" hx-trigger="load once"></div>
-    <div class="main" hx-target="this" hx-get="/temp/_main" hx-trigger="load once">
+    <div class="nav" hx-get="/temps/_nav.html" hx-target="this" hx-trigger="load" hx-swap="outerHTML"></div>
+    <div class="main" hx-target="this" hx-get="/temps/_main.html" hx-trigger="load" hx-swap="outerHTML"></div>
 
-    </div>
+    <div id="logName"></div>
 </div>
 </body>
+<script src="assets/app.js"></script>
 </html>
