@@ -1,0 +1,10 @@
+<div id="main">
+<h1>{{title}}</h1>
+<ul>
+    {{#each products}}
+        <li>{{this.name}} | {{this.price}} | {{this.quantity}} - <button onclick="addToCart({{this.id}})">Add to cart</button></li>
+    {{/each}}
+</ul>
+    <button onclick="clearCart()">Clear shopping cart</button>
+    <button onclick="send()">Order</button>
+</div>

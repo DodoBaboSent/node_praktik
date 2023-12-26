@@ -5,31 +5,40 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p .",
+    "build": "tsc -p . && npx browserify -p esmify src/assets/js/app.js -o static/assets/app.js",
     "start": "NODE_PATH=./buld build/assets/app.js",
-    "dev": "nodemon src/index.ts"
+    "dev": "start nodemon src/index.ts && start npx watchify -p esmify src/assets/js/app.js -o static/assets/app.js -v "
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.7.1",
+    "@types/cookie-parser": "^1.4.6",
     "@types/mysql": "^2.15.24",
+    "browserify": "^17.0.0",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "express-session": "^1.17.3",
+    "hbs": "^4.2.0",
     "mysql": "^2.18.1",
     "sqlite3": "^5.1.6"
   },
   "prisma": {
+    "seed": "ts-node prisma/seeds/prods.ts",
     "schema": "prisma/schema.prisma"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.10.5",
     "@types/sqlite3": "^3.1.11",
+    "esmify": "^2.1.1",
     "nodemon": "^3.0.2",
     "prisma": "^5.7.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "watchify": "^4.0.0"
   }
 }
