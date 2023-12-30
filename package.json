@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p . && npx browserify -p esmify src/assets/js/app.js -o static/assets/app.js",
+    "build": "tsc -p . && npx browserify -p esmify src/assets/js/app.js -o static/assets/app.js && npx tailwindcss -i ./src/assets/app.css -o ./static/assets/app.css",
     "start": "NODE_PATH=./buld build/assets/app.js",
-    "dev": "start nodemon src/index.ts && start npx watchify -p esmify src/assets/js/app.js -o static/assets/app.js -v "
+    "dev": "start nodemon src/index.ts && start npx watchify -p esmify src/assets/js/app.js -o static/assets/app.js -v && start npx tailwindcss -i ./src/assets/css/app.css -o ./static/assets/app.css --watch"
   },
   "keywords": [],
   "author": "",
@@ -37,6 +37,7 @@
     "esmify": "^2.1.1",
     "nodemon": "^3.0.2",
     "prisma": "^5.7.1",
+    "tailwindcss": "^3.4.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "watchify": "^4.0.0"

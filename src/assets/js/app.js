@@ -13,6 +13,7 @@ else {
     window.addToCart = addToCart
     window.clearCart = clearCart
     window.send = send
+    window.updateCart = updateCart
 }
 export function updateUser(){
     console.log("hit")
@@ -22,30 +23,59 @@ export function updateUser(){
         document.getElementById("logName").innerHTML = null;
     }
 }
-/**
- *
- * @type {string[]}
- */
-let cart = window.sessionStorage.getItem("cart")?.split(",") || []
+
+export function contains(needle, cart){
+    return cart.some(elem => {
+        return JSON.stringify(needle) === JSON.stringify(elem);
+    })
+}
+
 /**
  *
  * @param id integer
  */
 export function addToCart(id){
-    let id_str = id.toString()
-    if (!cart.includes(id_str)) { cart.push(id.toString()) }
-    window.sessionStorage.setItem("cart", cart)
+    let name = document.getElementById(`name__${id}`).innerText
+    let price = document.getElementById(`price__${id}`).innerText
+    let quantity = document.getElementById(`quant__${id}`).innerText
+    let obj = {id: id, name: name, price: price, quantity: quantity}
+    let cart
+    if(sessionStorage.cart)
+    {
+        cart= JSON.parse(sessionStorage.getItem('cart'));
+    }else{
+        cart=[];
+    }
+    if (!contains(obj, cart)) {
+        console.log(!cart.includes(obj))
+        cart.push(obj)
+        sessionStorage.setItem("cart", JSON.stringify(cart))
+    }
+    updateCart()
 }
+
+
+
+export function updateCart(){
+    let cart_el = document.getElementById("cart__view")
+    let cart = window.sessionStorage.getItem("cart")
+    let cart_view = JSON.parse(cart)
+
+    //console.log(cart_view)
+    let HTMLstring = ''
+    for (let cartViewKey in cart_view) {
+        console.log(cart_view[cartViewKey])
+        HTMLstring += `<div><div class="inline-block">${cart_view[cartViewKey].name}</div> | <div class="inline-block">${cart_view[cartViewKey].price}</div> | <div class="inline-block">${cart_view[cartViewKey].quantity}</div></div>`
+    }
+    cart_el.innerHTML = HTMLstring
+}
+
 export function clearCart(){
-    cart = []
     window.sessionStorage.removeItem("cart")
+    updateCart()
 }
 
 export function send(){
-    const request = []
-    for (const Element of cart) {
-        request.push({id: +Element})
-    }
-    console.log(request)
-    htmx.ajax('POST', '/cart', { values: cart })
+    let cart = sessionStorage.getItem("cart")
+    htmx.ajax('POST', '/cart', { values: JSON.parse(cart) })
 }

@@ -9,9 +9,11 @@
 <body>
 <div class="grid wrapper">
     <div class="nav" hx-get="/temps/nav.hbs" hx-target="this" hx-trigger="load" hx-swap="outerHTML"></div>
-    <div class="main" hx-target="this" hx-get="/temps/main.hbs" hx-trigger="load" hx-swap="outerHTML"></div>
+    <main class="main">
+    <div hx-target="this" hx-get="/temps/main.hbs" hx-trigger="load" hx-swap="outerHTML"></div>
 
-    <div id="logName"></div>
+    <div id="logName" class="you"></div>
+    </main>
 </div>
 </body>
 </html>

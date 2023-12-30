@@ -1,10 +1,13 @@
-<div id="main">
-<h1>{{title}}</h1>
+<div id="main" class="flex gap-2 flex-col">
+<h1 class="text-2xl font-bold">{{title}}</h1>
 <ul>
     {{#each products}}
-        <li>{{this.name}} | {{this.price}} | {{this.quantity}} - <button onclick="addToCart({{this.id}})">Add to cart</button></li>
+        <li><div id="name__{{this.id}}" class="inline-block">{{this.name}}</div> | <div id="price__{{this.id}}" class="inline-block">{{this.price}}</div> | <div id="quant__{{this.id}}" class="inline-block">{{this.quantity}}</div> - <button onclick="addToCart({{this.id}})" class="bg-amber-400 rounded px-0.5">Add to cart</button></li>
     {{/each}}
 </ul>
-    <button onclick="clearCart()">Clear shopping cart</button>
-    <button onclick="send()">Order</button>
+    <button onclick="clearCart()" class="bg-amber-400 rounded w-1/2">Clear shopping cart</button>
+    <button onclick="send()" class="bg-amber-400 rounded w-1/2">Order</button>
+    <button onclick="updateCart()" class="bg-amber-400 rounded w-1/2">Refresh Cart</button>
+
+    <div id="cart__view" class="flex flex-col"></div>
 </div>

@@ -68,7 +68,7 @@ app.get('/log', async (req: Request, res: Response)=> {
    } catch (e){
        console.log(e)
        console.log({usr_email, usr_password})
-       console.log(req.body)
+       console.log(req.query.email)
        res.json(e)
    }
 });
@@ -99,33 +99,38 @@ app.get('/temps/:temp', async (req: Request, res: Response)=>{
     }
 })
 app.post('/cart', async (req: Request, res: Response) => {
-    const id = req.body
-    console.log("Cookies = " + req.cookies.user)
-    let cart : {id: number}[] = []
-    for (let idKey in id) {
-        // console.log(id[idKey])
-        cart!.push({id: +id[idKey]})
+    const req_arr : string[] = Object.values(req.body)
+    // console.log(JSON.stringify(req_arr))
+    let arr = []
+    for (const reqArrKey in req_arr) {
+        arr.push(JSON.parse(req_arr[reqArrKey]))
     }
-    // console.log(cart)
+    // console.log(arr)
     // console.log(Object.assign({}, ...cart))
-    let obj = cart.map((v) => {
+    let arr_ids = arr.map((v) => {
+        console.log(v)
         return {"id": v.id}
     })
-    console.log(obj)
+    // console.log(arr_ids)
     // res.json(Object.assign({}, ...cart))
-    const newOrder = await prisma.order.create({
+    if (arr_ids.length !== 0){
+    try { const newOrder = await prisma.order.create({
             data: {
                 user: {
                     connect: {
-                        email: req.cookies.user
+                        email: req.cookies.user.email
                     }
                 },
                 product: {
-                    connect: obj
+                    connect: arr_ids
                     }
                 }
             })
-    res.json(newOrder)
+    res.json(newOrder) } catch (e) {
+        console.log(e)
+    }} else {
+        res.json({err: "Корзина пуста"})
+    }
     //res.redirect(301, '/')
 })
 app.listen(port, () =>{
