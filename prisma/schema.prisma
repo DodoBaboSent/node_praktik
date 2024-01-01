@@ -18,6 +18,12 @@ model User {
   Orders Order[]
 }
 
+model Film {
+  id Int @id @default(autoincrement())
+  name String
+  link String
+}
+
 model Products {
   id       Int     @id @default(autoincrement())
   name     String

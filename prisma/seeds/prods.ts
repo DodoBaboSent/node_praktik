@@ -29,11 +29,19 @@ async function main(){
         }
     })
     const user = await prisma.user.upsert({
-        where: { id:100 },
+        where: { id:100, email: "example@example.com" },
         update: {},
         create: {
             email: "example@example.com",
             password: "example"
+        }
+    })
+    const film = await prisma.film.upsert({
+        where: {id:1},
+        update: {},
+        create:{
+            name: "Blade Runner 2049 2017 HDRip 1.45 om lv scarabey.avi",
+            link: "static/media/Blade Runner 2049 2017 HDRip 1.45 om lv scarabey.avi"
         }
     })
 }

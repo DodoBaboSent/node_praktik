@@ -1,0 +1,9 @@
+<div id="main" class="main">
+    <button hx-target="#captcha" hx-swap="innerHTML" hx-get="/captcha/100/100" hx-on="click">Generate</button>
+    <div id="captcha"></div>
+    <form hx-swap="innerHTML" hx-target="#res" hx-post="/check-captcha" hx-trigger="submit">
+        <label for="inp">Text: <input id="inp" name="inp" type="text"></label>
+        <button type="submit">Check</button>
+    </form>
+    <div id="res"></div>
+</div>
