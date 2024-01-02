@@ -1,4 +1,6 @@
 import {PrismaClient} from "@prisma/client"
+import * as crypto from "crypto-js"
+const examplePass = crypto.SHA256("example").toString()
 const prisma = new PrismaClient()
 async function main(){
     const samsung = await prisma.products.upsert({
@@ -33,7 +35,7 @@ async function main(){
         update: {},
         create: {
             email: "example@example.com",
-            password: "example"
+            password: examplePass
         }
     })
     const film = await prisma.film.upsert({

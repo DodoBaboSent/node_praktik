@@ -6,6 +6,8 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import * as fs from "fs";
 import {createCanvas, CanvasRenderingContext2D} from "canvas";
+import * as crypto from "crypto-js"
+
 
 
 const prisma = new PrismaClient;
@@ -83,17 +85,18 @@ app.set('views', path.join(__dirname,'/views'))
 
 app.post('/reg', async (req: Request, res: Response) => {
    const { email, password } = req.body;
+   const passw_crypt = crypto.SHA256(password).toString()
    try {
    const post = await prisma.user.create({
        data: {
            email,
-           password
+           password: passw_crypt
        }
    })
    res.redirect(301, "/")
    } catch(e) {
        console.log(e)
-       console.log({email, password})
+       console.log({email, passw_crypt})
        console.log(req.body)
        res.json(e)
    }
@@ -101,6 +104,7 @@ app.post('/reg', async (req: Request, res: Response) => {
 app.get('/log', async (req: Request, res: Response)=> {
    const usr_email = '' || req.query.email!.toString();
    const usr_password = '' || req.query.password!.toString();
+   const passw_crypt = crypto.SHA256(usr_password).toString()
    try{
        const get = await prisma.user.findFirst({
            select: {
@@ -109,7 +113,7 @@ app.get('/log', async (req: Request, res: Response)=> {
            },
            where: {
                email : usr_email,
-               password : usr_password
+               password : passw_crypt
            }
        })
        res.header("Cache-Control", "no-cache, no-store, must-revalidate");
