@@ -3,10 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Hello World</title>
-    <script src="assets/app.js"></script>
     <link rel="stylesheet" href="assets/app.css">
+    <script type="text/javascript" src="assets/app.js"></script>
 </head>
 <body>
-    <h1>Hello world</h1>
+<div class="grid wrapper">
+    <div class="nav" hx-get="/temps/nav.hbs" hx-target="this" hx-trigger="load" hx-swap="outerHTML"></div>
+    <main class="main">
+    <div hx-target="this" hx-get="/temps/main.hbs" hx-trigger="load" hx-swap="outerHTML"></div>
+
+    <div id="logName" class="you"></div>
+    </main>
+</div>
 </body>
 </html>
